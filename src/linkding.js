@@ -139,7 +139,7 @@ export class LinkdingApi {
   async deleteBookmark(bookmarkId) {
     const configuration = this.configuration;
 
-    if(!bookmarkId || bookmarkId <= 0) {
+    if (!bookmarkId || bookmarkId <= 0) {
       return Promise.reject(`Invalid bookmark ID: ${bookmarkId}`);
     }
 
@@ -149,7 +149,7 @@ export class LinkdingApi {
         Authorization: `Token ${configuration.token}`,
         "Content-Type": "application/json",
       },
-      body: '',
+      body: "",
     }).then((response) => {
       if (response.status === 201) {
         return response.json();
@@ -159,7 +159,7 @@ export class LinkdingApi {
         return response
           .json()
           .then((body) =>
-            Promise.reject(`Validation error: ${JSON.stringify(body)}`)
+            Promise.reject(`Validation error: ${JSON.stringify(body)}`),
           );
       } else {
         return Promise.reject(`Request error: ${response.statusText}`);

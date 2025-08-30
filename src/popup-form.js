@@ -255,7 +255,6 @@ export class PopupForm extends LitElement {
           window.close();
         }, this.extensionConfiguration?.closeAddBookmarkWindowOnSaveMs);
       }
-
     } catch (e) {
       this.saveState = "error";
       this.errorMessage = e.toString();
@@ -266,7 +265,7 @@ export class PopupForm extends LitElement {
   async openBaseUrl() {
     const browser = getBrowser();
     let url = this.extensionConfiguration?.baseUrl;
-    if(!url) {
+    if (!url) {
       url = "https://github.com/sissbruecker/linkding-extension";
     }
     await browser.tabs.create({ url });
@@ -274,7 +273,7 @@ export class PopupForm extends LitElement {
   }
 
   async handleOpenBaseUrl() {
-    await this.openBaseUrl()
+    await this.openBaseUrl();
   }
 
   render() {
@@ -454,7 +453,11 @@ export class PopupForm extends LitElement {
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M5 12l5 5l10 -10" />
                   </svg>
-                  <span>${this.deleteBookmark ? "Bookmark deleted" : "Bookmark saved"}</span>
+                  <span
+                    >${this.deleteBookmark
+                      ? "Bookmark deleted"
+                      : "Bookmark saved"}</span
+                  >
                 </div>
               `
             : ""}
@@ -470,45 +473,46 @@ export class PopupForm extends LitElement {
                 <div class="button-row">
                   ${this.bookmarkExists
                     ? html`
-                      <button
-                        type="button"
-                        class="btn btn-error btn-wide ${this.deleteBookmark ? "d-none" : ""}"
-                        @click="${(e) => {
-                          e.preventDefault();
-                          this.toggleDeleteBookmark();
-                        }}"
-                        >
-                          Delete
-                        </button>
-                      <div class="${!this.deleteBookmark ? "d-none" : ""}">
                         <button
                           type="button"
-                          class="btn btn-wide"
+                          class="btn btn-error btn-wide ${this.deleteBookmark
+                            ? "d-none"
+                            : ""}"
                           @click="${(e) => {
                             e.preventDefault();
                             this.toggleDeleteBookmark();
                           }}"
                         >
-                          Cancel
+                          Delete
                         </button>
-                        <button
-                          type="button"
-                          class="btn btn-error btn-wide ${
-                            this.saveState === "loading"
-                            ? "loading"
-                            : ""
-                          }"
-                          ?disabled="${this.saveState === "loading"}"
-                          @click="${(e) => {
-                            e.preventDefault();
-                            this.handleDeleteBookmark();
-                          }}"
-                        >
-                          Confirm
-                        </button>
-                      </div>
-                    `
-                    :""}
+                        <div class="${!this.deleteBookmark ? "d-none" : ""}">
+                          <button
+                            type="button"
+                            class="btn btn-wide"
+                            @click="${(e) => {
+                              e.preventDefault();
+                              this.toggleDeleteBookmark();
+                            }}"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-error btn-wide ${this.saveState ===
+                            "loading"
+                              ? "loading"
+                              : ""}"
+                            ?disabled="${this.saveState === "loading"}"
+                            @click="${(e) => {
+                              e.preventDefault();
+                              this.handleDeleteBookmark();
+                            }}"
+                          >
+                            Confirm
+                          </button>
+                        </div>
+                      `
+                    : ""}
                   <span style="flex:1;"></span>
                   <button
                     type="submit"
