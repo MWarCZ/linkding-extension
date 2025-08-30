@@ -29,7 +29,17 @@ export default [
 		],
 		watch: {
 			clearScreen: false
-		}
+		},
+		onwarn(warning, warn) {
+			if (
+				warning.code === "THIS_IS_UNDEFINED" &&
+				warning.id &&
+				warning.id.includes("webextension-polyfill")
+			) {
+				return;
+			}
+			warn(warning);
+		},
 	},
 	// Background bundle
 	{
@@ -53,6 +63,17 @@ export default [
 		],
 		watch: {
 			clearScreen: false
-		}
+		},
+		onwarn(warning, warn) {
+			if (
+				warning.code === "THIS_IS_UNDEFINED" &&
+				warning.id &&
+				warning.id.includes("webextension-polyfill")
+			) {
+				return;
+			}
+			warn(warning);
+		},
 	}
+	
 ];
