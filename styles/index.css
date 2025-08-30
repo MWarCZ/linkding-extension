@@ -35,6 +35,11 @@ body {
     border-bottom: solid 1px var(--secondary-border-color);
   }
 
+  .title-links {
+    display: flex; 
+    gap: .4em;
+  }
+
   .form-label-row {
     display: flex;
     justify-content: space-between;

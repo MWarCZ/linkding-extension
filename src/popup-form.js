@@ -1,6 +1,7 @@
 import { LitElement, html } from "lit";
 import "./tag-autocomplete.js";
 import {
+  getBrowser,
   getBrowserMetadata,
   getCurrentTabInfo,
   openOptions,
@@ -226,20 +227,45 @@ export class PopupForm extends LitElement {
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
   }
 
+  async openBaseUrl() {
+    const browser = getBrowser();
+    let url = this.extensionConfiguration?.baseUrl;
+    if(!url) {
+      url = "https://github.com/sissbruecker/linkding-extension";
+    }
+    await browser.tabs.create({ url });
+    window.close();
+  }
+
+  async handleOpenBaseUrl() {
+    await this.openBaseUrl()
+  }
+
   render() {
     return html`
       <div class="title-row">
         <h1 class="h6">
           ${this.bookmarkExists ? "Edit Bookmark" : "Add bookmark"}
         </h1>
-        <a
-          href="#"
-          @click="${(e) => {
-            e.preventDefault();
-            this.handleOptions();
-          }}"
-          >Options</a
-        >
+        <div class="title-links">
+          <a
+            href="#!"
+            @click="${(e) => {
+              e.preventDefault();
+              this.handleOpenBaseUrl();
+            }}"
+            >Home</a
+          >
+          <span>|</span>
+          <a
+            href="#!"
+            @click="${(e) => {
+              e.preventDefault();
+              this.handleOptions();
+            }}"
+            >Options</a
+          >
+        </div>
       </div>
       <form class="form" @submit="${this.handleSubmit}">
         <div class="form-group">
