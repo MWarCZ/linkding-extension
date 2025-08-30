@@ -319,11 +319,16 @@ export class PopupForm extends LitElement {
           </div>
           ${this.bookmarkExists
             ? html`
-                <div class="form-input-hint text-warning">
-                  This URL is already bookmarked. The form has been prefilled
-                  from the existing bookmark, and saving the form will update
-                  the existing bookmark.
-                </div>
+                <details class="form-input-hint">
+                  <summary class="text-warning">
+                    Warning! This URL is already bookmarked <i>(Read more)</i>
+                  </summary>
+                  <p>
+                    This URL is already bookmarked. The form has been prefilled
+                    from the existing bookmark, and saving the form will update
+                    the existing bookmark.
+                  </p>
+                </details>
               `
             : ""}
         </div>
