@@ -1,3 +1,5 @@
+import "webextension-polyfill";
+
 export function getBrowser() {
   return typeof browser !== "undefined" ? browser : chrome;
 }
@@ -17,7 +19,9 @@ export async function getCurrentTabInfo() {
 }
 
 function isFirefox() {
-  return typeof browser !== "undefined";
+  const isChromium = !!window.chrome && !("mozInnerScreenX" in window);
+  // const isFirefox = 'mozInnerScreenX' in window;
+  return !isChromium;
 }
 
 function useChromeScripting() {
@@ -138,7 +142,8 @@ export function showBadge(tabId) {
   const browser = getBrowser();
   const action = browser.browserAction || browser.action;
   action.setBadgeText({ text: "★", tabId: tabId });
-  action.setBadgeTextColor({ color: "#FFE234", tabId: tabId });
+  if (action.setBadgeTextColor)
+    action.setBadgeTextColor({ color: "#FFE234", tabId: tabId });
   action.setBadgeBackgroundColor({
     color: "rgba(100,100,100,1)",
     tabId: tabId,

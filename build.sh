@@ -8,8 +8,19 @@ DIST_DIR="dist"
 MANIFEST_FILE="manifest.json"
 INCLUDE_ITEMS=("manifest.json" "build" "icons" "options" "popup" "styles")
 
+# Detect target browser (default = firefox)
+BROWSER="${1:-firefox}"
+BROWSER_MANIFEST_FILE="manifest.$BROWSER.json"
+
 # Update dependencies
 npm install
+
+# Check for manifest.[browser].json
+if [ ! -f "$BROWSER_MANIFEST_FILE" ]; then
+    echo "Error: $BROWSER_MANIFEST_FILE not found in the current directory."
+    exit 1
+fi
+cp "$BROWSER_MANIFEST_FILE" "$MANIFEST_FILE"
 
 # Run rollup build
 npm run build
@@ -31,10 +42,10 @@ if [ -z "$VERSION" ]; then
 fi
 
 # Define output file
-ZIP_FILE="$DIST_DIR/${EXTENSION_NAME}-${VERSION}.zip"
+ZIP_FILE="$DIST_DIR/${EXTENSION_NAME}-${VERSION}-${BROWSER}.zip"
 
 # Build the zip
-echo "Packaging extension version $VERSION into $ZIP_FILE..."
+echo "Packaging extension version $VERSION-$BROWSER into $ZIP_FILE..."
 zip -r "$ZIP_FILE" "${INCLUDE_ITEMS[@]}"
 
 echo "✅ Done!"
