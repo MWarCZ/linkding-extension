@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "linkding extension",
-  "version": "1.14.0",
+  "version": "1.14.0.1",
   "description": "Companion extension for the linkding bookmark service",
   "homepage_url": "https://github.com/sissbruecker/linkding-extension/",
 
@@ -47,5 +47,12 @@
     "storage",
     "http://*/*",
     "https://*/*"
-  ]
+  ],
+
+  "browser_specific_settings": {
+    "gecko": {
+      "update_url": "https://php.tenvalka.eu/linkding-extension/mozilla/updates.json"
+    }
+  }
+
 }
