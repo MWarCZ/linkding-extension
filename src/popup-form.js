@@ -65,6 +65,8 @@ export class PopupForm extends LitElement {
     this.loading = false;
     this.bookmarkId = null;
     this.deleteBookmark = false;
+    this.originBookmarksLimit = 5;
+    this.originBookmarks = [];
   }
 
   createRenderRoot() {
@@ -133,6 +135,11 @@ export class PopupForm extends LitElement {
 
     this.shared = this.configuration.shareSelected;
     this.unread = this.configuration.unreadSelected;
+
+    let rootUrl = new URL(this.url);
+    this.originBookmarks = await this.api.search(rootUrl.origin, {
+      limit: this.originBookmarksLimit,
+    });
 
     // If the bookmark already exists, prefill the form with the existing bookmark
     if (!serverMetadata) {
@@ -316,20 +323,44 @@ export class PopupForm extends LitElement {
             />
             ${this.loading ? html`<i class="form-icon loading"></i>` : ""}
           </div>
-          ${this.bookmarkExists
+          ${this.originBookmarks
             ? html`
-                <details class="form-input-hint">
-                  <summary class="text-warning">
-                    Warning! This URL is already bookmarked <i>(Read more)</i>
-                  </summary>
-                  <p>
-                    This URL is already bookmarked. The form has been prefilled
-                    from the existing bookmark, and saving the form will update
-                    the existing bookmark.
-                  </p>
-                </details>
+                <div class="form-similar">
+                  <strong>Similar saved:</strong>
+                  <ul>
+                    ${this.originBookmarks.map(
+                      (bookmark) => html`
+                        <li
+                          class="${this.url == bookmark.url
+                            ? "text-warning"
+                            : ""}"
+                        >
+                          ${bookmark.url}
+                        </li>
+                      `,
+                    )}
+                    ${this.originBookmarks.length >= this.originBookmarksLimit
+                      ? html` <li>...</li> `
+                      : ""}
+                  </ul>
+                </div>
               `
             : ""}
+          ${this.bookmarkExists
+            ? ""
+            : // ? html`
+              //     <details class="form-input-hint">
+              //       <summary class="text-warning">
+              //         Warning! This URL is already bookmarked <i>(Read more)</i>
+              //       </summary>
+              //       <p>
+              //         This URL is already bookmarked. The form has been prefilled
+              //         from the existing bookmark, and saving the form will update
+              //         the existing bookmark.
+              //       </p>
+              //     </details>
+              //   `
+              ""}
         </div>
         <div class="form-group">
           <label class="form-label" for="input-tags">Tags</label>

@@ -82,3 +82,14 @@ body {
   /* Override responsive styles that change font-size on inputs */
   font-size: var(--font-size) !important;
 }
+
+.form-similar {
+  margin-top: 8px;
+}
+.form-similar ul {
+  margin: 0;
+  line-height: 1.3;
+}
+.form-similar li {
+  margin: 0;
+}
