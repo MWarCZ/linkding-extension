@@ -240,43 +240,30 @@ export class PopupForm extends LitElement {
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
   }
 
-  toggleDeleteBookmark() {
-    this.deleteBookmark = !this.deleteBookmark;
-  }
-
-  async handleDeleteBookmark() {
-    try {
-      this.saveState = "loading";
-      await this.api.deleteBookmark(this.bookmarkId, {});
-      await clearCachedServerMetadata();
-      this.saveState = "success";
-      // Hide star badge on the tab to indicate that it's not bookmarked now
-      removeBadge(this.tabInfo.id);
-
-      // Close popup window after saving the bookmark, if configured
-      if (
-        this.extensionConfiguration?.closeAddBookmarkWindowOnSave === true &&
-        this.extensionConfiguration?.closeAddBookmarkWindowOnSaveMs >= 0
-      ) {
-        window.setTimeout(() => {
-          window.close();
-        }, this.extensionConfiguration?.closeAddBookmarkWindowOnSaveMs);
-      }
-    } catch (e) {
-      this.saveState = "error";
-      this.errorMessage = e.toString();
-      console.error(this.errorMessage);
-    }
-  }
-
-  async openBaseUrl() {
+  async openUrl(url, openAsNextTab = false) {
     const browser = getBrowser();
+    if (openAsNextTab) {
+      const tabs = await browser.tabs.query({
+        active: true,
+        currentWindow: true,
+      });
+      if (tabs.length > 0) {
+        const index = tabs[0].index + 1;
+        await browser.tabs.create({ url, index });
+        window.close();
+        return;
+      }
+    }
+    await browser.tabs.create({ url });
+    window.close();
+  }
+
+  async openBaseUrl(openAsNextTab = false) {
     let url = this.extensionConfiguration?.baseUrl;
     if (!url) {
       url = "https://github.com/sissbruecker/linkding-extension";
     }
-    await browser.tabs.create({ url });
-    window.close();
+    this.openUrl(url, openAsNextTab);
   }
 
   async handleOpenBaseUrl() {
