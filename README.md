@@ -13,17 +13,29 @@ Companion extension for the self-hosted [linkding](https://github.com/sissbrueck
 
 Works with: Firefox, Chrome
 
+
+| Tested on | Win11 | Win10 |
+|-----------|-------|-------|
+| Firefox   | ✅   | ✅    |
+| Zen       | ✅   | ❔    |
+| Chrome    | ✅   | ❔    |
+| Brave     | ✅   | ✅    |
+| Other     | ❔   | ❔    |
+
 **Screenshot**
 
-![Screenshot](/docs/screenshot.png?raw=true "Screenshot")
+![Screenshot](/docs/screenshot_add.png?raw=true "Screenshot add bookmark")
+
+![Screenshot](/docs/screenshot_update.png?raw=true "Screenshot update bookmark")
+![Screenshot](/docs/screenshot_delete.png?raw=true "Screenshot delete bookmark")
 
 ## Installation
 
 ### Forked extension
 
-Firefox: Forget it.
+Firefox: Forget about it for now. Use manual install or original extension.
 
-Chrome: Forget it too.
+Chrome: Forget about it for now too. Use manual install or original extension.
 
 ### Original extension
 
