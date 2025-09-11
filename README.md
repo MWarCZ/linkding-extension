@@ -58,31 +58,15 @@ Run the build as described below from the `chrome` branch and then follow the in
 **Requirements**
 - Latest LTS Node version
 - Latest LTS NPM version
-- bash
-- zip
-
-Run the following bash script to generate a build (might need to make the file executable using `chmod +x build.sh`):
 
 **Build for Firefox and Firefox-based**
 ```bash
-./build.sh
-# or
-./build.sh firefox
-# or
-bash build.sh
-# or
-bash build.sh firefox
+npm run build:firefox
 ```
 
 **Build for Chrome and Chromium-based**
 ```bash
-./build.sh
-# or
-./build.sh firefox
-# or
-bash build.sh
-# or
-bash build.sh firefox
+npm run build:chrome
 ```
 
 The script does:
@@ -99,14 +83,10 @@ The packaged extension can be found in the `dist` folder.
 
 Basic clean after build (`build`, `dist`, `manifest.json`).
 ```bash
-./clean.sh
-# or
-bash clean.sh
+npm run clean
 ```
 
 Full clean after build (`build`, `dist`, `manifest.json`, `node_modules`).
 ```bash
-./clean.sh --all
-# or
-bash clean.sh --all
+npm run clean:all
 ```
