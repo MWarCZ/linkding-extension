@@ -13,14 +13,6 @@ const browser = process.argv[2] || "firefox";
 const browserManifestFile = `manifest.${browser}.json`;
 
 shell.echo(`
-==========================
-Installing dependencies...
-==========================`);
-if (shell.exec("npm install").code !== 0) {
-  shell.exit(1);
-}
-
-shell.echo(`
 ========================
 Copying manifest.json...
 ========================`);

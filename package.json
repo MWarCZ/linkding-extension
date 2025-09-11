@@ -18,9 +18,9 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "format": "prettier --write \"src/**/*.js\"",
-    "build:firefox": "node build.js firefox",
-    "build:chrome": "node build.js chrome",
-    "build:all": "node build.js firefox && node build.js chrome",
+    "build:firefox": "npm install && node build.js firefox",
+    "build:chrome": "npm install && node build.js chrome",
+    "build:all": "npm install && node build.js firefox && node build.js chrome",
     "clean": "node clean.js",
     "clean:all": "node clean.js --all",
     "prepare": "husky"
